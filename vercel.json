@@ -10,10 +10,6 @@
   },
   "rewrites": [
     {
-      "source": "/.well-known/farcaster.json",
-      "destination": "/api/manifest"
-    },
-    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
