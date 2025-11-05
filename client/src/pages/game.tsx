@@ -2,14 +2,25 @@ import { useState, useEffect, useRef } from 'react';
 import { Trophy, Wallet, X, ChevronDown, Moon, Sun, Play, RotateCcw } from 'lucide-react';
 import { loadLeaderboardFromContract, submitScoreToContract, formatAddress } from '@/lib/web3';
 
-const BASE_CHAIN_ID = '0x2105';
+// Base Sepolia testnet (where contract is deployed)
+const BASE_CHAIN_ID = '0x14a34'; // Base Sepolia testnet
 const BASE_CHAIN_CONFIG = {
   chainId: BASE_CHAIN_ID,
-  chainName: 'Base',
+  chainName: 'Base Sepolia',
   nativeCurrency: { name: 'Ethereum', symbol: 'ETH', decimals: 18 },
-  rpcUrls: ['https://mainnet.base.org'],
-  blockExplorerUrls: ['https://basescan.org']
+  rpcUrls: ['https://sepolia.base.org'],
+  blockExplorerUrls: ['https://sepolia.basescan.org']
 };
+
+// For future: Base Mainnet config
+// const BASE_MAINNET_CHAIN_ID = '0x2105'; // Base Mainnet
+// const BASE_MAINNET_CONFIG = {
+//   chainId: BASE_MAINNET_CHAIN_ID,
+//   chainName: 'Base',
+//   nativeCurrency: { name: 'Ethereum', symbol: 'ETH', decimals: 18 },
+//   rpcUrls: ['https://mainnet.base.org'],
+//   blockExplorerUrls: ['https://basescan.org']
+// };
 
 declare global {
   interface Window {
@@ -209,12 +220,21 @@ export default function CatchingGame() {
           localStorage.setItem('catchItemsLeaderboard', JSON.stringify(existing));
           loadLeaderboard();
           
-          // Show user-friendly error if contract submission failed
+          // Show user-friendly error messages
+          let errorMessage = 'Failed to submit to blockchain. Score saved locally.';
+          
           if (contractError.message?.includes('Contract address not set')) {
-            alert('Smart contract not deployed yet. Score saved locally.');
-          } else {
-            alert('Failed to submit to blockchain. Score saved locally.');
+            errorMessage = 'Smart contract not configured. Score saved locally.';
+          } else if (contractError.message?.includes('insufficient funds')) {
+            errorMessage = 'Insufficient funds for gas fees. Please add Base Sepolia ETH to your wallet.';
+          } else if (contractError.message?.includes('user rejected')) {
+            errorMessage = 'Transaction was rejected. Score saved locally.';
+          } else if (contractError.message?.includes('network') || contractError.message?.includes('chain')) {
+            errorMessage = 'Wrong network. Please switch to Base Sepolia testnet.';
           }
+          
+          alert(errorMessage);
+          console.error('Full error:', contractError);
         }
       } catch (error) {
         console.error('Error saving score:', error);
