@@ -322,7 +322,7 @@ export default function CatchingGame() {
               Catch Items
             </h1>
             <p className={`${textSecondary} text-xs md:text-sm mt-1`} data-testid="text-subtitle">
-              Web3 Game on Base Network
+              Web3 Game on Base Sepolia Testnet
             </p>
           </div>
 
