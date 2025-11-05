@@ -2,3 +2,9 @@ server/
 .env
 .env.local
 node_modules/
+contracts/
+scripts/
+hardhat.config.cjs
+artifacts/
+cache/
+*.sol
