@@ -4,6 +4,9 @@
     "payload": "",
     "signature": ""
   },
+  "baseBuilder": {
+    "ownerAddress": "0x8e1D6E6cC15F6c508c0B918B376A6B9Caed4AdE8"
+  },
   "miniapp": {
     "version": "1",
     "name": "Catchxyz",
