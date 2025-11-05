@@ -1,4 +1,6 @@
-export default function handler(req: any, res: any) {
+import type { VercelRequest, VercelResponse } from '@vercel/node';
+
+export default function handler(req: VercelRequest, res: VercelResponse) {
   const hostedManifestUrl = process.env.FARCASTER_HOSTED_MANIFEST_URL;
   
   if (hostedManifestUrl) {
