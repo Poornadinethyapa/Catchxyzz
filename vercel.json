@@ -3,14 +3,16 @@
   "outputDirectory": "dist/public",
   "installCommand": "npm install",
   "framework": null,
-  "redirects": [
+  "functions": {
+    "server/index.ts": {
+      "runtime": "nodejs20.x"
+    }
+  },
+  "rewrites": [
     {
       "source": "/.well-known/farcaster.json",
-      "destination": "${FARCASTER_HOSTED_MANIFEST_URL}",
-      "statusCode": 307
-    }
-  ],
-  "rewrites": [
+      "destination": "/api/manifest"
+    },
     {
       "source": "/(.*)",
       "destination": "/index.html"
