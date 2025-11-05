@@ -3,6 +3,13 @@
   "outputDirectory": "dist/public",
   "installCommand": "npm install",
   "framework": null,
+  "redirects": [
+    {
+      "source": "/.well-known/farcaster.json",
+      "destination": "${FARCASTER_HOSTED_MANIFEST_URL}",
+      "statusCode": 307
+    }
+  ],
   "rewrites": [
     {
       "source": "/(.*)",
