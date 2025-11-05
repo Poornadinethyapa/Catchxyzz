@@ -11,7 +11,7 @@
   "rewrites": [
     {
       "source": "/.well-known/farcaster.json",
-      "destination": "/api/.well-known/farcaster.json"
+      "destination": "/api/manifest"
     },
     {
       "source": "/(.*)",
