@@ -1,7 +1,7 @@
 {
-  "buildCommand": "npx vite build",
+  "buildCommand": "npm ci --omit=dev && npx vite build",
   "outputDirectory": "dist/public",
-  "installCommand": "npm install",
+  "installCommand": "npm ci --omit=dev",
   "framework": null,
   "functions": {
     "server/index.ts": {
