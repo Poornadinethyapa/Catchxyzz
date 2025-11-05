@@ -23,6 +23,30 @@ git push
 
 ---
 
+## Step 0: Find the Farcaster Dashboard First! 🔍
+
+**Before Step 2, you need to access the Farcaster Mini App dashboard.**
+
+### How to Find It:
+
+1. **Try Base Build:**
+   - Go to: https://www.base.dev
+   - Sign in with your wallet
+   - Look for "Mini Apps" or "Build" section
+
+2. **Or Try Farcaster Developer Tools:**
+   - Go to: https://farcaster.xyz/~/developers/mini-apps/manifest
+   - Sign in with Farcaster
+
+3. **What You're Looking For:**
+   - A page where you can enter your domain: `catchxyz.vercel.app`
+   - A "Create Mini App" or "Manage Manifest" button
+   - A long URL that starts with `https://api.farcaster.xyz/miniapps/hosted-manifest/...`
+
+**If you can't find it, let me know and we'll use a simpler approach!**
+
+---
+
 ## Step 2: Set Up Temporary Redirect (In Vercel Dashboard)
 
 This is a ONE-TIME setup to verify your domain:
