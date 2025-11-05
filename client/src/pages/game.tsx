@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Trophy, Wallet, X, ChevronDown, Moon, Sun, Play, RotateCcw } from 'lucide-react';
+import { loadLeaderboardFromContract, submitScoreToContract, formatAddress } from '@/lib/web3';
 
 const BASE_CHAIN_ID = '0x2105';
 const BASE_CHAIN_CONFIG = {
@@ -51,16 +52,40 @@ export default function CatchingGame() {
     loadLeaderboard();
   }, []);
 
-  const loadLeaderboard = () => {
+  const loadLeaderboard = async () => {
     setLoading(true);
     try {
-      const stored = localStorage.getItem('catchItemsLeaderboard');
-      if (stored) {
-        const scores: LeaderboardEntry[] = JSON.parse(stored);
-        setLeaderboard(scores.sort((a, b) => b.score - a.score).slice(0, 10));
+      // Try loading from smart contract first
+      const contractEntries = await loadLeaderboardFromContract(10);
+      
+      if (contractEntries.length > 0) {
+        // Convert contract entries to our format
+        const formatted: LeaderboardEntry[] = contractEntries.map(entry => ({
+          address: formatAddress(entry.player),
+          score: entry.score,
+          timestamp: entry.timestamp,
+        }));
+        setLeaderboard(formatted);
+      } else {
+        // Fallback to localStorage
+        const stored = localStorage.getItem('catchItemsLeaderboard');
+        if (stored) {
+          const scores: LeaderboardEntry[] = JSON.parse(stored);
+          setLeaderboard(scores.sort((a, b) => b.score - a.score).slice(0, 10));
+        }
       }
     } catch (error) {
-      console.log('Loading leaderboard...');
+      console.error('Error loading leaderboard:', error);
+      // Fallback to localStorage
+      try {
+        const stored = localStorage.getItem('catchItemsLeaderboard');
+        if (stored) {
+          const scores: LeaderboardEntry[] = JSON.parse(stored);
+          setLeaderboard(scores.sort((a, b) => b.score - a.score).slice(0, 10));
+        }
+      } catch (localError) {
+        console.error('Error loading from localStorage:', localError);
+      }
     } finally {
       setLoading(false);
     }
@@ -159,18 +184,38 @@ export default function CatchingGame() {
 
     if (account && score > 0) {
       try {
-        const shortAddr = `${account.slice(0, 6)}...${account.slice(-4)}`;
-        const scoreData: LeaderboardEntry = {
-          address: shortAddr,
-          score: score,
-          timestamp: Date.now()
-        };
-        
-        const stored = localStorage.getItem('catchItemsLeaderboard');
-        const existing: LeaderboardEntry[] = stored ? JSON.parse(stored) : [];
-        existing.push(scoreData);
-        localStorage.setItem('catchItemsLeaderboard', JSON.stringify(existing));
-        loadLeaderboard();
+        // Try submitting to smart contract
+        try {
+          const txHash = await submitScoreToContract(score);
+          console.log('Score submitted to contract:', txHash);
+          // Reload leaderboard after a short delay to allow block to be mined
+          setTimeout(() => {
+            loadLeaderboard();
+          }, 2000);
+        } catch (contractError: any) {
+          console.error('Error submitting to contract:', contractError);
+          
+          // If contract fails, fallback to localStorage
+          const shortAddr = formatAddress(account);
+          const scoreData: LeaderboardEntry = {
+            address: shortAddr,
+            score: score,
+            timestamp: Date.now()
+          };
+          
+          const stored = localStorage.getItem('catchItemsLeaderboard');
+          const existing: LeaderboardEntry[] = stored ? JSON.parse(stored) : [];
+          existing.push(scoreData);
+          localStorage.setItem('catchItemsLeaderboard', JSON.stringify(existing));
+          loadLeaderboard();
+          
+          // Show user-friendly error if contract submission failed
+          if (contractError.message?.includes('Contract address not set')) {
+            alert('Smart contract not deployed yet. Score saved locally.');
+          } else {
+            alert('Failed to submit to blockchain. Score saved locally.');
+          }
+        }
       } catch (error) {
         console.error('Error saving score:', error);
       }
