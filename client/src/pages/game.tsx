@@ -1,11 +1,35 @@
 import { useState, useEffect, useRef } from 'react';
 import { Trophy, X, Moon, Sun, Play, RotateCcw } from 'lucide-react';
 
+function FallingLogo({ item }: { item: FallingItem }) {
+  const [imageError, setImageError] = useState(false);
+
+  return (
+    <div
+      className="absolute transition-all duration-50 drop-shadow-lg"
+      style={{ left: `${item.x}%`, top: `${item.y}%` }}
+    >
+      {imageError ? (
+        <span className="text-3xl md:text-4xl">{item.emoji}</span>
+      ) : (
+        <img
+          src={item.image}
+          alt="crypto logo"
+          className="w-10 h-10 md:w-12 md:h-12 object-contain"
+          style={{ imageRendering: 'pixelated' }}
+          onError={() => setImageError(true)}
+        />
+      )}
+    </div>
+  );
+}
+
 interface FallingItem {
   id: number;
   x: number;
   y: number;
   image: string;
+  emoji: string;
 }
 
 interface LeaderboardEntry {
@@ -53,16 +77,18 @@ export default function CatchingGame() {
 
     itemInterval.current = setInterval(() => {
       const logos = [
-        '/logos/farcaster.png',
-        '/logos/base.png',
-        '/logos/eth.png',
-        '/logos/btc.png'
+        { image: '/logos/farcaster.png', emoji: '🔷' },
+        { image: '/logos/base.png', emoji: '🔵' },
+        { image: '/logos/eth.png', emoji: 'Ξ' },
+        { image: '/logos/btc.png', emoji: '₿' }
       ];
+      const logo = logos[Math.floor(Math.random() * logos.length)];
       const newItem: FallingItem = {
         id: Date.now() + Math.random(),
         x: Math.random() * 85,
         y: 0,
-        image: logos[Math.floor(Math.random() * logos.length)]
+        image: logo.image,
+        emoji: logo.emoji
       };
       setItems(prev => [...prev, newItem]);
     }, 1200);
@@ -263,18 +289,7 @@ export default function CatchingGame() {
               onTouchMove={handleTouchMove}
             >
               {items.map(item => (
-                <div
-                  key={item.id}
-                  className="absolute transition-all duration-50 drop-shadow-lg"
-                  style={{ left: `${item.x}%`, top: `${item.y}%` }}
-                >
-                  <img
-                    src={item.image}
-                    alt="crypto logo"
-                    className="w-10 h-10 md:w-12 md:h-12 object-contain"
-                    style={{ imageRendering: 'pixelated' }}
-                  />
-                </div>
+                <FallingLogo key={item.id} item={item} />
               ))}
               <div
                 className="absolute bottom-0 text-5xl md:text-6xl transition-all duration-100 drop-shadow-xl"
