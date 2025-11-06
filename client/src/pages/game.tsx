@@ -56,7 +56,7 @@ export default function CatchingGame() {
         id: Date.now() + Math.random(),
         x: Math.random() * 85,
         y: 0,
-        emoji: ['🍎', '🍊', '🍌', '🍇', '🍓', '🥝', '🍒', '🍑'][Math.floor(Math.random() * 8)]
+        emoji: ['🔷', '🔵', 'Ξ', '₿'][Math.floor(Math.random() * 4)]
       };
       setItems(prev => [...prev, newItem]);
     }, 1200);
