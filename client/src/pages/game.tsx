@@ -2,24 +2,24 @@ import { useState, useEffect, useRef } from 'react';
 import { Trophy, X, Moon, Sun, Play, RotateCcw } from 'lucide-react';
 
 function FallingLogo({ item }: { item: FallingItem }) {
+  const [imageError, setImageError] = useState(false);
+
   return (
     <div
       className="absolute transition-all duration-50 drop-shadow-lg"
       style={{ left: `${item.x}%`, top: `${item.y}%` }}
     >
-      <img
-        src={item.image}
-        alt="crypto logo"
-        className="w-10 h-10 md:w-12 md:h-12 object-contain"
-        style={{ imageRendering: 'pixelated' }}
-        onError={(e) => {
-          // Retry with the image path again
-          const target = e.target as HTMLImageElement;
-          setTimeout(() => {
-            target.src = item.image;
-          }, 100);
-        }}
-      />
+      {imageError ? (
+        <span className="text-3xl md:text-4xl">{item.emoji}</span>
+      ) : (
+        <img
+          src={item.image}
+          alt="crypto logo"
+          className="w-10 h-10 md:w-12 md:h-12 object-contain"
+          style={{ imageRendering: 'pixelated' }}
+          onError={() => setImageError(true)}
+        />
+      )}
     </div>
   );
 }
@@ -77,10 +77,10 @@ export default function CatchingGame() {
 
     itemInterval.current = setInterval(() => {
       const logos = [
-        { image: '/logos/farcaster.png', emoji: '🔷' },
-        { image: '/logos/base.png', emoji: '🔵' },
-        { image: '/logos/eth.png', emoji: 'Ξ' },
-        { image: '/logos/btc.png', emoji: '₿' }
+        { image: '/logos/farcaster.svg', emoji: '🔷' },
+        { image: '/logos/base.svg', emoji: '🔵' },
+        { image: '/logos/eth.svg', emoji: 'Ξ' },
+        { image: '/logos/btc.svg', emoji: '₿' }
       ];
       const logo = logos[Math.floor(Math.random() * logos.length)];
       const newItem: FallingItem = {

@@ -1,0 +1,9 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <!-- Bitcoin Logo - Orange circle with white B -->
+  <circle cx="32" cy="32" r="30" fill="#F7931A"/>
+  <path d="M32 16 L38 16 L38 20 L40 20 L40 24 L38 24 L38 28 L40 28 L40 32 L38 32 L38 36 L40 36 L40 40 L38 40 L38 44 L32 44 L32 40 L30 40 L30 36 L28 36 L28 32 L30 32 L30 28 L28 28 L28 24 L30 24 L30 20 L32 20 Z" fill="white"/>
+  <path d="M32 20 L36 20 L36 24 L32 24 Z" fill="#F7931A"/>
+  <path d="M32 28 L36 28 L36 32 L32 32 Z" fill="#F7931A"/>
+  <path d="M32 36 L36 36 L36 40 L32 40 Z" fill="#F7931A"/>
+</svg>
+
