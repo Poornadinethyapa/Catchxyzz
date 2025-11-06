@@ -299,17 +299,17 @@ export default function CatchingGame() {
   }, [darkMode]);
 
   const bgClass = darkMode 
-    ? 'bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900' 
-    : 'bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50';
+    ? 'bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900' 
+    : 'bg-gradient-to-br from-blue-50 via-cyan-50 to-blue-50';
   
   const cardClass = darkMode 
     ? 'bg-white/10 backdrop-blur-md border border-white/20' 
     : 'bg-white/80 backdrop-blur-md border border-gray-200 shadow-xl';
   
   const textClass = darkMode ? 'text-white' : 'text-gray-900';
-  const textSecondary = darkMode ? 'text-purple-300' : 'text-purple-600';
+  const textSecondary = darkMode ? 'text-blue-300' : 'text-blue-600';
   const gameAreaBg = darkMode 
-    ? 'bg-gradient-to-b from-indigo-900 via-purple-900 to-slate-900' 
+    ? 'bg-gradient-to-b from-indigo-900 via-blue-900 to-slate-900' 
     : 'bg-gradient-to-b from-sky-300 via-blue-200 to-green-100';
 
   return (
@@ -345,7 +345,7 @@ export default function CatchingGame() {
                 <>
                   <button
                     onClick={() => setShowWalletMenu(!showWalletMenu)}
-                    className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 px-3 md:px-6 py-2 md:py-3 rounded-lg font-bold flex items-center gap-2 transition-all shadow-lg hover:shadow-xl text-sm md:text-base"
+                    className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 px-3 md:px-6 py-2 md:py-3 rounded-lg font-bold flex items-center gap-2 transition-all shadow-lg hover:shadow-xl text-sm md:text-base"
                     data-testid="button-connect-wallet"
                   >
                     <Wallet className="w-4 md:w-5 h-4 md:h-5" />
@@ -461,7 +461,7 @@ export default function CatchingGame() {
                 {isGuest && !gameActive && (
                   <button
                     onClick={() => setShowWalletMenu(true)}
-                    className="bg-purple-500 hover:bg-purple-600 px-3 md:px-4 py-2 rounded-lg flex items-center gap-2 transition-all shadow-md text-xs md:text-sm font-medium"
+                    className="bg-blue-500 hover:bg-blue-600 px-3 md:px-4 py-2 rounded-lg flex items-center gap-2 transition-all shadow-md text-xs md:text-sm font-medium"
                     data-testid="button-save-score"
                   >
                     <Wallet className="w-4 h-4" />
@@ -583,7 +583,7 @@ export default function CatchingGame() {
 
         {showLeaderboard && (
           <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-in fade-in duration-200">
-            <div className={`${darkMode ? 'bg-gradient-to-br from-gray-900 to-purple-900' : 'bg-gradient-to-br from-white to-purple-50'} rounded-2xl p-6 md:p-8 max-w-md w-full shadow-2xl border ${darkMode ? 'border-purple-500/30' : 'border-purple-200'}`}>
+            <div className={`${darkMode ? 'bg-gradient-to-br from-gray-900 to-blue-900' : 'bg-gradient-to-br from-white to-blue-50'} rounded-2xl p-6 md:p-8 max-w-md w-full shadow-2xl border ${darkMode ? 'border-blue-500/30' : 'border-blue-200'}`}>
               <div className="flex justify-between items-center mb-6">
                 <h2 className="text-2xl md:text-3xl font-bold flex items-center gap-3">
                   <Trophy className="w-7 h-7 md:w-8 md:h-8 text-yellow-400" />
