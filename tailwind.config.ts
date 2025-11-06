@@ -83,9 +83,10 @@ export default {
         },
       },
       fontFamily: {
-        sans: ["var(--font-sans)"],
-        serif: ["var(--font-serif)"],
-        mono: ["var(--font-mono)"],
+        sans: ["'Press Start 2P'", "monospace"],
+        serif: ["'Press Start 2P'", "monospace"],
+        mono: ["'Press Start 2P'", "monospace"],
+        display: ["'Press Start 2P'", "monospace"],
       },
       keyframes: {
         "accordion-down": {

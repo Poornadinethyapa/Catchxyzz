@@ -1,9 +1,0 @@
-# Copy this content to your .env file
-# Make sure to add 0x prefix to your private key!
-
-PRIVATE_KEY=0x41cf4f43784805a4529884ca2c51901b76671836681975a407a49b0f68c2604e
-BASE_MAINNET_RPC_URL=https://mainnet.base.org
-BASE_SEPOLIA_RPC_URL=https://sepolia.base.org
-BASESCAN_API_KEY=W3HRUIT9DTFEH6F4NQ9HDRD7M1KSNH3HBD
-VITE_CONTRACT_ADDRESS=
-
