@@ -5,7 +5,7 @@ interface FallingItem {
   id: number;
   x: number;
   y: number;
-  emoji: string;
+  image: string;
 }
 
 interface LeaderboardEntry {
@@ -52,11 +52,17 @@ export default function CatchingGame() {
     setBasketPos(50);
 
     itemInterval.current = setInterval(() => {
+      const logos = [
+        '/logos/farcaster.png',
+        '/logos/base.png',
+        '/logos/eth.png',
+        '/logos/btc.png'
+      ];
       const newItem: FallingItem = {
         id: Date.now() + Math.random(),
         x: Math.random() * 85,
         y: 0,
-        emoji: ['🔷', '🔵', 'Ξ', '₿'][Math.floor(Math.random() * 4)]
+        image: logos[Math.floor(Math.random() * logos.length)]
       };
       setItems(prev => [...prev, newItem]);
     }, 1200);
@@ -259,10 +265,15 @@ export default function CatchingGame() {
               {items.map(item => (
                 <div
                   key={item.id}
-                  className="absolute text-3xl md:text-4xl transition-all duration-50 drop-shadow-lg"
+                  className="absolute transition-all duration-50 drop-shadow-lg"
                   style={{ left: `${item.x}%`, top: `${item.y}%` }}
                 >
-                  {item.emoji}
+                  <img
+                    src={item.image}
+                    alt="crypto logo"
+                    className="w-10 h-10 md:w-12 md:h-12 object-contain"
+                    style={{ imageRendering: 'pixelated' }}
+                  />
                 </div>
               ))}
               <div
